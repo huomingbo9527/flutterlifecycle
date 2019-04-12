@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lifecycle/page5.dart';
-
+import 'package:random_color/random_color.dart';
 
 class Page4 extends StatefulWidget {
   Page4({Key key, this.title = "Page4"}) : super(key: key);
@@ -62,40 +62,101 @@ class _Page4State extends State<Page4> with WidgetsBindingObserver{
 //    while(Navigator.of(context).canPop()){
 //      Navigator.of(context).pop();
 //    }
-  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-      return Page5();
-    }), ModalRoute.withName("/"));
+//  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+//      return Page5();
+//    }), ModalRoute.withName("/"));
 //    setState(() {
 //      _counter++;
 //    });
   }
 
+//  @override
+//  Widget build(BuildContext context) {
+//    print("Page4   build ");
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text(widget.title),
+//      ),
+//      body: Center(
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          children: <Widget>[
+//            Text(
+//              'page444444444444:',
+//            ),
+//            Text(
+//              '$_counter',
+//              style: Theme.of(context).textTheme.display1,
+//            ),
+//          ],
+//        ),
+//      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: _incrementCounter,
+//        tooltip: 'Increment',
+//        child: Icon(Icons.add),
+//      ), // This trailing comma makes auto-formatting nicer for build methods.
+//    );
+//  }
+
+  List<Widget> widgets = [
+    StatelessContainer(),
+    StatelessContainer(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    print("Page4   build ");
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'page444444444444:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+          children: widgets,
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        onPressed: switchWidget,
+        child: Icon(Icons.undo),
+      ),
+    );
+  }
+
+  switchWidget() async {
+//    MediaQueryData.fromWindow(window)
+    widgets.insert(0, widgets.removeAt(1));
+    setState(() {});
+  }
+}
+
+
+class StatelessContainer extends StatelessWidget {
+  final Color color = RandomColor().randomColor();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      color: color,
+    );
+  }
+}
+
+
+class StatefulContainer extends StatefulWidget {
+  StatefulContainer({Key key}) : super(key: key);
+  @override
+  _StatefulContainerState createState() => _StatefulContainerState();
+}
+
+class _StatefulContainerState extends State<StatefulContainer> {
+  final Color color = RandomColor().randomColor();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      color: color,
     );
   }
 }
