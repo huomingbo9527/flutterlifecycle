@@ -1,10 +1,50 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_lifecycle/page2.dart';
 import 'package:flutter_lifecycle/redux/IState.dart';
 import 'package:flutter_lifecycle/redux/reduxPage2.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-void main() => runApp(MyApp());
+void main(){
+  var data = [1, 2, 3, 4];
+  Stream<int> stream = Stream.fromIterable(data).asBroadcastStream();
+  StreamTransformer<int,int> transformer = new StreamTransformer.fromHandlers(//StreamTransformer<int,dynamic>
+      handleData: (e, sink){
+        sink.add(e*2);
+      }
+  );
+  stream.transform(transformer).listen(print);
+// equivalent below
+  stream.map((e) => e*2).listen(print);
+
+
+
+//  var data = [1, 2, 3, 4];
+//  Stream stream = Stream.fromIterable(data);
+//  stream.asBroadcastStream();
+//  var sub = stream.listen(null);
+//  sub.cancel();
+//  sub.onDone((){
+//    print("onDone");
+//  });
+//  var controller = new StreamController();//单个订阅
+//  var controller = new StreamController.broadcast();//多个订阅
+//  controller.stream.listen((e){
+//    print(e);
+//  });
+//  controller.add(1);
+//  controller.close();
+//  print(data);
+//  Future.delayed(Duration(seconds: 2)).then((res){
+//    stream.listen((e){
+//      print(e);
+//    });
+//  });
+//  Stream.fromIterable(data).listen((e){
+//    print(e);
+//  });
+}// => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final store = new Store<IState>(
